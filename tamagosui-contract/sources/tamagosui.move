@@ -17,13 +17,13 @@ const E_PET_IS_ALREADY_ASLEEP: u64 = 109;
 
 // === Constants ===
 const PET_LEVEL_1_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/1.jpg";
-const PET_LEVEL_1_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreibizappmcjaq5a5metl27yc46co4kxewigq6zu22vovwvn5qfsbiu";
-const PET_LEVEL_2_IMAGE_URL: vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreia5tgsowzfu6mzjfcxagfpbkghfuho6y5ybetxh3wabwrc5ajmlpq";
-const PET_LEVEL_2_IMAGE_WITH_GLASSES_URL:vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreif5bkpnqyybq3aqgafqm72x4wfjwcuxk33vvykx44weqzuilop424";
-const PET_LEVEL_3_IMAGE_URL: vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreidnqerfwxuxkrdsztgflmg5jwuespdkrazl6qmk7ykfgmrfzvinoy";
-const PET_LEVEL_3_IMAGE_WITH_GLASSES_URL:vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreigs6r3rdupoji7pqmpwe76z7wysguzdlq43t3wqmzi2654ux5n6uu";
-const PET_SLEEP_IMAGE_URL: vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreihwofl5stihtzjixfhrtznd7zqkclfhmlshgsg7cbszzjqqpvf7ae";
-const ACCESSORY_GLASSES_IMAGE_URL: vector<u8> = b"https://tan-kind-lizard-741.mypinata.cloud/ipfs/bafkreigyivmq45od3jkryryi3w6t5j65hcnfh5kgwpi2ex7llf2i6se7de";
+const PET_LEVEL_1_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/1WEED.png";
+const PET_LEVEL_2_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/2.png";
+const PET_LEVEL_2_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/2WEED.png";
+const PET_LEVEL_3_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/3.png";
+const PET_LEVEL_3_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/3WEED.png";
+const PET_SLEEP_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/SLEEP.png";
+const ACCESSORY_GLASSES_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/WEED.png";
 
 const EQUIPPED_ITEM_KEY: vector<u8> = b"equipped_item";
 const SLEEP_STARTED_AT_KEY: vector<u8> = b"sleep_started_at";
@@ -351,7 +351,7 @@ public entry fun check_and_level_up(pet: &mut Pet) {
 public entry fun mint_accessory(ctx: &mut TxContext) {
     let accessory = PetAccessory {
         id: object::new(ctx),
-        name: string::utf8(b"cool glasses"),
+        name: string::utf8(b"good weed"),
         image_url: string::utf8(ACCESSORY_GLASSES_IMAGE_URL)
     };
     transfer::public_transfer(accessory, ctx.sender());
