@@ -129,31 +129,29 @@ export default function PetComponent({ pet }: PetDashboardProps) {
   const canLevelUp =
     !pet.isSleeping &&
     pet.game_data.experience >=
-      pet.game_data.level * Number(gameBalance.exp_per_level);
+    pet.game_data.level * Number(gameBalance.exp_per_level);
 
   return (
     <TooltipProvider>
-      <Card className="w-full max-w-sm shadow-hard border-2 border-primary">
-        <CardHeader className="text-center">
-          <CardTitle className="text-4xl">{pet.name}</CardTitle>
-          <CardDescription className="text-lg">
-            Level {pet.game_data.level}
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="space-y-4">
-          {/* Pet Image */}
-          <div className="flex justify-center">
-            <img
-              src={pet.image_url}
-              alt={pet.name}
-              className="w-36 h-36 rounded-full border-4 border-primary/20 object-cover"
-            />
+      <Card className="w-full max-w-4xl shadow-hard border-2 border-primary flex flex-row p-4 gap-6 overflow-hidden">
+        {/* Bagian Kiri: Foto + Nama + Level */}
+        <div className="flex flex-col items-center max-w-xl min-w-[180px]">
+          <img
+            src={pet.image_url}
+            alt={pet.name}
+            className="w-md h-md rounded-sm border-4 border-primary/20 object-cover mb-4"
+          />
+          <div className="text-center">
+            <h2 className="text-4xl font-bold">{pet.name}</h2>
+            <p className="text-lg">Level {pet.game_data.level}</p>
           </div>
+        </div>
 
-          {/* Game & Stats Data */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center text-lg">
+        {/* Bagian Kanan: Status dan Action */}
+        <div className="flex flex-col justify-between w-2/3">
+          {/* Status */}
+          <div>
+            <div className="flex justify-between items-center text-lg mb-4">
               <Tooltip>
                 <TooltipTrigger className="flex items-center gap-2">
                   <CoinsIcon className="w-5 h-5 text-yellow-500" />
@@ -174,7 +172,6 @@ export default function PetComponent({ pet }: PetDashboardProps) {
               </Tooltip>
             </div>
 
-            {/* Stat Bars */}
             <div className="space-y-2">
               <StatDisplay
                 icon={<BatteryIcon className="text-green-500" />}
@@ -194,7 +191,8 @@ export default function PetComponent({ pet }: PetDashboardProps) {
             </div>
           </div>
 
-          <div className="pt-2">
+          {/* Action Button */}
+          <div className="mt-6 space-y-2">
             <Button
               onClick={() => mutateLevelUp({ petId: pet.id })}
               disabled={!canLevelUp || isAnyActionPending}
@@ -207,24 +205,22 @@ export default function PetComponent({ pet }: PetDashboardProps) {
               )}
               Level Up!
             </Button>
-          </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <ActionButton
-              onClick={() => mutateFeedPet({ petId: pet.id })}
-              disabled={!canFeed || isAnyActionPending}
-              isPending={isFeeding}
-              label="Feed"
-              icon={<DrumstickIcon />}
-            />
-            <ActionButton
-              onClick={() => mutatePlayWithPet({ petId: pet.id })}
-              disabled={!canPlay || isAnyActionPending}
-              isPending={isPlaying}
-              label="Play"
-              icon={<PlayIcon />}
-            />
-            <div className="col-span-2">
+            <div className="grid grid-cols-3 gap-3">
+              <ActionButton
+                onClick={() => mutateFeedPet({ petId: pet.id })}
+                disabled={!canFeed || isAnyActionPending}
+                isPending={isFeeding}
+                label="Feed"
+                icon={<DrumstickIcon />}
+              />
+              <ActionButton
+                onClick={() => mutatePlayWithPet({ petId: pet.id })}
+                disabled={!canPlay || isAnyActionPending}
+                isPending={isPlaying}
+                label="Play"
+                icon={<PlayIcon />}
+              />
               <ActionButton
                 onClick={() => mutateWorkForCoins({ petId: pet.id })}
                 disabled={!canWork || isAnyActionPending}
@@ -233,13 +229,12 @@ export default function PetComponent({ pet }: PetDashboardProps) {
                 icon={<BriefcaseIcon />}
               />
             </div>
-          </div>
-          <div className="col-span-2 pt-2">
+
             {pet.isSleeping ? (
               <Button
                 onClick={() => mutateWakeUpPet({ petId: pet.id })}
                 disabled={isWakingUp}
-                className="w-full bg-yellow-500 hover:bg-yellow-600"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 mt-2"
               >
                 {isWakingUp ? (
                   <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
@@ -252,7 +247,7 @@ export default function PetComponent({ pet }: PetDashboardProps) {
               <Button
                 onClick={() => mutateLetPetSleep({ petId: pet.id })}
                 disabled={isAnyActionPending}
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-blue-600 hover:bg-blue-700 mt-2"
               >
                 {isSleeping ? (
                   <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
@@ -263,11 +258,11 @@ export default function PetComponent({ pet }: PetDashboardProps) {
               </Button>
             )}
           </div>
-        </CardContent>
         <WardrobeManager
           pet={pet}
           isAnyActionPending={isAnyActionPending || pet.isSleeping}
         />
+        </div>
       </Card>
     </TooltipProvider>
   );

@@ -17,13 +17,13 @@ const E_PET_IS_ALREADY_ASLEEP: u64 = 109;
 
 // === Constants ===
 const PET_LEVEL_1_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/1.jpg";
-const PET_LEVEL_1_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/1WEED.png";
+const PET_LEVEL_1_IMAGE_WITH_WEED_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/1WEED.png";
 const PET_LEVEL_2_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/2.png";
-const PET_LEVEL_2_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/2WEED.png";
+const PET_LEVEL_2_IMAGE_WITH_WEED_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/2WEED.png";
 const PET_LEVEL_3_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/3.png";
-const PET_LEVEL_3_IMAGE_WITH_GLASSES_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/3WEED.png";
+const PET_LEVEL_3_IMAGE_WITH_WEED_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/3WEED.png";
 const PET_SLEEP_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/SLEEP.png";
-const ACCESSORY_GLASSES_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/WEED.png";
+const ACCESSORY_WEED_IMAGE_URL: vector<u8> = b"https://raw.githubusercontent.com/dimsp4/tamagoweed-sui/refs/heads/main/assets/bekantan/WEED.png";
 
 const EQUIPPED_ITEM_KEY: vector<u8> = b"equipped_item";
 const SLEEP_STARTED_AT_KEY: vector<u8> = b"sleep_started_at";
@@ -352,7 +352,7 @@ public entry fun mint_accessory(ctx: &mut TxContext) {
     let accessory = PetAccessory {
         id: object::new(ctx),
         name: string::utf8(b"good weed"),
-        image_url: string::utf8(ACCESSORY_GLASSES_IMAGE_URL)
+        image_url: string::utf8(ACCESSORY_WEED_IMAGE_URL)
     };
     transfer::public_transfer(accessory, ctx.sender());
 }
@@ -402,19 +402,19 @@ fun update_pet_image(pet: &mut Pet) {
     
     if (pet.game_data.level == 1) {
         if (has_accessory) {
-            pet.image_url = string::utf8(PET_LEVEL_1_IMAGE_WITH_GLASSES_URL);
+            pet.image_url = string::utf8(PET_LEVEL_1_IMAGE_WITH_WEED_URL);
         } else {
             pet.image_url = string::utf8(PET_LEVEL_1_IMAGE_URL);
         }
     } else if (pet.game_data.level == 2) {
         if (has_accessory) {
-            pet.image_url = string::utf8(PET_LEVEL_2_IMAGE_WITH_GLASSES_URL);
+            pet.image_url = string::utf8(PET_LEVEL_2_IMAGE_WITH_WEED_URL);
         } else {
             pet.image_url = string::utf8(PET_LEVEL_2_IMAGE_URL);
         }
     } else if (pet.game_data.level >= 3) {
         if (has_accessory) {
-            pet.image_url = string::utf8(PET_LEVEL_3_IMAGE_WITH_GLASSES_URL);
+            pet.image_url = string::utf8(PET_LEVEL_3_IMAGE_WITH_WEED_URL);
         } else {
             pet.image_url = string::utf8(PET_LEVEL_3_IMAGE_URL);
         }

@@ -1,4 +1,4 @@
-import { GlassesIcon, Loader2Icon, WarehouseIcon } from "lucide-react";
+import { CannabisIcon, GlassesIcon, Loader2Icon, WarehouseIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
@@ -109,14 +109,14 @@ export function WardrobeManager({
       <Button
         onClick={() => mutateMint()}
         disabled={isAnyActionPending || isProcessingWardrobe}
-        className="w-full cursor-pointer"
+        className="w-full cursor-pointer bg-green-800"
       >
         {isMinting ? (
           <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          <GlassesIcon className="mr-2 h-4 w-4" />
+          <CannabisIcon className="mr-2 h-4 w-4" />
         )}{" "}
-        Mint Cool Glasses
+        Mint Good Weed
       </Button>
     );
   };
