@@ -11,6 +11,7 @@ import {
   BriefcaseIcon,
   ZapIcon,
   ChevronUpIcon,
+  PocketKnifeIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -41,12 +42,14 @@ import { useMutateWorkForCoins } from "@/hooks/useMutateWorkForCoins";
 import { useQueryGameBalance } from "@/hooks/useQueryGameBalance";
 
 import type { PetStruct } from "@/types/Pet";
+import { useMutateKillPet } from "@/hooks/useMutateKillPet";
 
 type PetDashboardProps = {
   pet: PetStruct;
+  handleKill: () => void;
 };
 
-export default function PetComponent({ pet }: PetDashboardProps) {
+export default function PetComponent({ pet, handleKill }: PetDashboardProps) {
   // --- Fetch Game Balance ---
   const { data: gameBalance, isLoading: isLoadingGameBalance } =
     useQueryGameBalance();
@@ -55,6 +58,7 @@ export default function PetComponent({ pet }: PetDashboardProps) {
 
   // --- Hooks for Main Pet Actions ---
   const { mutate: mutateFeedPet, isPending: isFeeding } = useMutateFeedPet();
+  const { mutate: mutateKillPet, isPending: isKillPet, isSuccess: isSuccessKill } = useMutateKillPet();
   const { mutate: mutatePlayWithPet, isPending: isPlaying } =
     useMutatePlayWithPet();
   const { mutate: mutateWorkForCoins, isPending: isWorking } =
@@ -70,6 +74,12 @@ export default function PetComponent({ pet }: PetDashboardProps) {
   useEffect(() => {
     setDisplayStats(pet.stats);
   }, [pet.stats]);
+
+  useEffect(() => {
+    if (isSuccessKill) {
+      handleKill()
+    }
+  }, [isSuccessKill])
 
   useEffect(() => {
     // This effect only runs when the pet is sleeping
@@ -110,7 +120,7 @@ export default function PetComponent({ pet }: PetDashboardProps) {
   // --- Client-side UI Logic & Button Disabling ---
   // `isAnyActionPending` prevents the user from sending multiple transactions at once.
   const isAnyActionPending =
-    isFeeding || isPlaying || isSleeping || isWorking || isLevelingUp;
+    isFeeding || isPlaying || isSleeping || isWorking || isLevelingUp || isKillPet;
 
   // These `can...` variables mirror the smart contract's rules (`assert!`) on the client-side.
   const canFeed =
@@ -258,10 +268,23 @@ export default function PetComponent({ pet }: PetDashboardProps) {
               </Button>
             )}
           </div>
-        <WardrobeManager
-          pet={pet}
-          isAnyActionPending={isAnyActionPending || pet.isSleeping}
-        />
+          <WardrobeManager
+            pet={pet}
+            isAnyActionPending={isAnyActionPending || pet.isSleeping}
+          />
+          <div className="w-full flex items-center justify-center flex-col">
+            <p className="mb-2 font-bold text-red-500">Failed or Frustated yet?</p>
+            <div className="w-full max-w-52">
+              <ActionButton
+                onClick={() => mutateKillPet({ petId: pet.id })}
+                disabled={isAnyActionPending}
+                isPending={isKillPet}
+                label="Kill Pet"
+                icon={<PocketKnifeIcon />}
+                variant={"destructive"}
+              />
+            </div>
+          </div>
         </div>
       </Card>
     </TooltipProvider>

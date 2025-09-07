@@ -79,7 +79,7 @@ fun get_game_balance(): GameBalance {
         work_hunger_loss: 20,
         work_happiness_loss: 20,
         work_coins_gain: 10,
-        work_experience_gain: 15,
+        work_experience_gain: 100,
 
         // Sleep (rates per millisecond)
         sleep_energy_gain_ms: 1000,    // 1 energy per second
@@ -210,6 +210,30 @@ public entry fun adopt_pet(
     });
 
     transfer::public_transfer(pet, ctx.sender());
+}
+
+public entry fun kill_pet(pet: Pet) {
+    emit_action(&pet, b"burned");
+
+    let Pet  {
+    id,
+    name: _,
+    image_url: _,
+    adopted_at: _,
+    stats: PetStats {
+        energy: _,
+        happiness: _,
+        hunger: _
+    },
+    game_data:  PetGameData {
+        coins: _,
+    experience: _,
+    level: _,
+    },
+    } = pet;
+    
+    // Hapus objek pet dari storage
+    object::delete(id);
 }
 
 public entry fun feed_pet(pet: &mut Pet) {
@@ -442,6 +466,8 @@ public fun is_sleeping(pet: &Pet): bool {
     let key = string::utf8(SLEEP_STARTED_AT_KEY);
     dynamic_field::exists_<String>(&pet.id, key)
 }
+
+
 
 // === Test-Only Functions ===
 #[test_only]
